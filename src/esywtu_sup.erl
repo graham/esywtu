@@ -25,5 +25,7 @@ start_link() ->
 
 init([]) ->
     Server = ?CHILD(esywtu_server, worker),
-    {ok, { {one_for_one, 5, 10}, [Server]} }.
+    MaxRestart = 5,
+    MaxTime = 10,
+    {ok, { {one_for_one, MaxRestart, MaxTime}, [Server]} }.
 
