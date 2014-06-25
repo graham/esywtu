@@ -6,8 +6,6 @@
 
 -record(server_state, { active, start_time, bind_list }).
 
--import("deps/erlv8/include/erlv8.hrl").
-
 start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
@@ -15,7 +13,7 @@ init([]) ->
     Port = 8989,
     spawn(
       fun () ->
-              {ok, Sock} = gen_tcp:listen(Port, [{active, false}]), 
+              {ok, Sock} = gen_tcp:listen(Port, [{active, false},{backlog, 50}]),
               loop(Sock)
       end
      ),
